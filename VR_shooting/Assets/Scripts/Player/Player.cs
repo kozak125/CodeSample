@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamagable
 {
@@ -23,7 +22,7 @@ public class Player : MonoBehaviour, IDamagable
     public void GetDamaged(int damageAmout)
     {
         health -= damageAmout;
-        onDamageTaken.Invoke(damageAmout);
+        onDamageTaken?.Invoke(damageAmout);
 
         CheckForDeath();
     }
@@ -38,6 +37,6 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Die()
     {
-
+        
     }
 }
