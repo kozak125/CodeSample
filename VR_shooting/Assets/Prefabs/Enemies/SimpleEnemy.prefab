@@ -138,5 +138,5 @@ MonoBehaviour:
   enemyMovements: {fileID: 11400000, guid: 15c6a353cc457c44c9111ea6c982464e, type: 2}
   noMovementStrategy: {fileID: 6358785276349926840, guid: ff192a192d9ca98429cc2d22728380b5,
     type: 3}
-  playerTransform: {fileID: 0}
   health: 50
+  attackSpeed: 2

@@ -12,6 +12,7 @@ public class EnemyLogic
     private bool isAttacking = false;
 
     public Action OnDie;
+    public Action<IDamagable> OnAttacking;
 
     public EnemyLogic(EnemyMovementPatterns _enemyMovements, EnemyNullMovementStrategy _noMovement, Transform _enemyTransform, Vector3 _playerPosition, int _health)
     {
@@ -65,13 +66,15 @@ public class EnemyLogic
     {
         if (other.CompareTag("Player"))
         {
-            Attack();
+            IDamagable player = other.GetComponent<Player>();
+            Attack(player);
         }
     }
 
-    private void Attack()
+    private void Attack(IDamagable objectToAttack)
     {
         moveEnemy = noMovementStrategy;
         isAttacking = true;
+        OnAttacking.Invoke(objectToAttack);
     }
 }
