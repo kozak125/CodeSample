@@ -40,7 +40,10 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        // pool that
         Destroy(gameObject);
+        // expose to editor
+        EventBroker.CallOnEnemyDestroyed(10);
     }
 
     private void Update()
