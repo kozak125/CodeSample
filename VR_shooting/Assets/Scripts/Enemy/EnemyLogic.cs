@@ -9,6 +9,7 @@ public class EnemyLogic
     private Vector3 playerPosition;
     private int health;
     private EnemyMovementPatterns.MovementStrategy moveEnemy;
+    private bool isAttacking = false;
 
     public Action OnDie;
 
@@ -24,7 +25,13 @@ public class EnemyLogic
     }
 
 
-    private void ChangeMovementStrategy(EnemyMovementPatterns.MovementStrategy movementStrategy) => moveEnemy = movementStrategy;
+    private void ChangeMovementStrategy(EnemyMovementPatterns.MovementStrategy movementStrategy)
+    {
+        if (!isAttacking)
+        {
+            moveEnemy = movementStrategy;
+        }
+    }
 
     public void RecieveDamage(int damageAmount)
     {
@@ -65,5 +72,6 @@ public class EnemyLogic
     private void Attack()
     {
         moveEnemy = noMovementStrategy;
+        isAttacking = true;
     }
 }
