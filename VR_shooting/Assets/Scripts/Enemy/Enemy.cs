@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         logic = new EnemyLogic(enemyMovements, noMovementStrategy, transform, playerTransform.position, health);
         logic.OnAttacking += Attack;
-        logic.OnDie += OnDie;
+        logic.OnDie += Die;
     }
 
     private void Attack(IDamagable objectToDamage) => StartCoroutine(AttackInIntervals(objectToDamage));
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnDie()
+    private void Die()
     {
         Destroy(gameObject);
     }
