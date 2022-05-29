@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private int health;
     [SerializeField]
     private float attackSpeed;
+    private int attackDamage = 10;
     private int damageFromGun = 10;
     private Transform playerTransform;
     private EnemyLogic logic;
@@ -32,7 +33,7 @@ public class Enemy : MonoBehaviour
         var attacksInterval = new WaitForSeconds(attackSpeed);
         while (true)
         {
-            objectToDamage.GetDamaged();
+            objectToDamage.GetDamaged(attackDamage);
             yield return attacksInterval;
         }
     }

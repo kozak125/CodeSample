@@ -2,13 +2,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamagable
 {
+    [SerializeField]
+    private HealthBar healthBar;
+
+    private int health = 100;
+    private Action<int> onDamageTaken;
+
+
     public Action OnAttacked;
 
-    public void GetDamaged()
+    private void Start()
     {
-        Debug.Log("Ouch!");
+        healthBar.Setup(health, ref onDamageTaken);
+    }
+
+    public void GetDamaged(int damageAmout)
+    {
+        health -= damageAmout;
+        onDamageTaken.Invoke(damageAmout);
+
+        CheckForDeath();
+    }
+
+    private void CheckForDeath()
+    {
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+
     }
 }
