@@ -14,6 +14,28 @@ public class EnemyMovementPatterns : ScriptableObject
 
     public delegate void MovementStrategy(Transform enemyTransform, Vector3 playerPosition);
     public MovementStrategy NormalMovementStrategy => normalMovementStrategy.Move;
-    public MovementStrategy ShotMovementStrategy => shotMovementStrategy.Move;
-    public MovementStrategy ErraticMovementStrategy => erraticMovementStrategy.Move;
+    public MovementStrategy ShotMovementStrategy
+    {
+        get
+        {
+            if (shotMovementStrategy != null)
+            {
+                return shotMovementStrategy.Move;
+            }
+
+            return NormalMovementStrategy;
+        }
+    }
+    public MovementStrategy ErraticMovementStrategy
+    {
+        get
+        {
+            if (erraticMovementStrategy != null)
+            {
+                return erraticMovementStrategy.Move;
+            }
+
+            return NormalMovementStrategy;
+        }
+    }
 }

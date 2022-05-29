@@ -40,21 +40,13 @@ public class EnemyLogic
             return;
         }
 
-        TryChangeMovementStrategy(enemyMovements.ShotMovementStrategy);
+        ChangeMovementStrategy(enemyMovements.ShotMovementStrategy);
     }
 
     private void Die()
     {
         ChangeMovementStrategy(noMovementStrategy);
         OnDie.Invoke();
-    }
-
-    public void TryChangeMovementStrategy(EnemyMovementPatterns.MovementStrategy movementStrategy)
-    {
-        if (movementStrategy != null)
-        {
-            ChangeMovementStrategy(movementStrategy);
-        }
     }
 
     public void UpdateLogic()
