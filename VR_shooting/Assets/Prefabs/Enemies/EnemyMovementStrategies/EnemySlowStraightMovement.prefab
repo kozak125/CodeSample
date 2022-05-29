@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1475292412886989944}
   - component: {fileID: -4012322305653904524}
   m_Layer: 0
-  m_Name: EnemySlowMovementStrategy
+  m_Name: EnemySlowStraightMovement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

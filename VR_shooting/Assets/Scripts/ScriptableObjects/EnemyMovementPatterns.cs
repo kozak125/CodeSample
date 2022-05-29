@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "New Enemy Movement For Logic")]
-public class EnemyMovementForLogic : ScriptableObject
+[CreateAssetMenu(menuName = "New Enemy Movement Patterns")]
+public class EnemyMovementPatterns : ScriptableObject
 {
     [SerializeField]
     private EnemyBaseMovementStrategy normalMovementStrategy;

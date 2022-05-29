@@ -1,21 +1,60 @@
 ﻿using UnityEngine;
+using System;
 
 public class EnemyLogic
 {
-    private EnemyMovementForLogic enemyMovements;
-    private EnemyNullMovementStrategy noMovementStrategy;
+    private EnemyMovementPatterns enemyMovements;
+    private EnemyMovementPatterns.MovementStrategy noMovementStrategy;
     private Transform enemyTransform;
     private Vector3 playerPosition;
-    private EnemyMovementForLogic.MovementStrategy moveEnemy;
+    private int health;
+    private EnemyMovementPatterns.MovementStrategy moveEnemy;
 
-    public EnemyLogic(EnemyMovementForLogic _enemyMovements, EnemyNullMovementStrategy _noMovement, Transform _enemyTransform, Vector3 _playerPosition)
+    public Action OnDie;
+
+    public EnemyLogic(EnemyMovementPatterns _enemyMovements, EnemyNullMovementStrategy _noMovement, Transform _enemyTransform, Vector3 _playerPosition, int _health)
     {
         enemyMovements = _enemyMovements;
-        noMovementStrategy = _noMovement;
+        noMovementStrategy = _noMovement.Move;
         enemyTransform = _enemyTransform;
         playerPosition = _playerPosition;
+        health = _health;
 
-        moveEnemy = enemyMovements.NormalMovementStrategy;
+        ChangeMovementStrategy(enemyMovements.NormalMovementStrategy);
+    }
+
+
+    private void ChangeMovementStrategy(EnemyMovementPatterns.MovementStrategy movementStrategy) => moveEnemy = movementStrategy;
+
+    public void RecieveDamage(int damageAmount)
+    {
+        health -= damageAmount;
+        CheckForDeath();
+    }
+
+    private void CheckForDeath()
+    {
+        if (health <= 0)
+        {
+            Die();
+            return;
+        }
+
+        TryChangeMovementStrategy(enemyMovements.ShotMovementStrategy);
+    }
+
+    private void Die()
+    {
+        ChangeMovementStrategy(noMovementStrategy);
+        OnDie.Invoke();
+    }
+
+    public void TryChangeMovementStrategy(EnemyMovementPatterns.MovementStrategy movementStrategy)
+    {
+        if (movementStrategy != null)
+        {
+            ChangeMovementStrategy(movementStrategy);
+        }
     }
 
     public void UpdateLogic()
@@ -33,6 +72,6 @@ public class EnemyLogic
 
     private void Attack()
     {
-        moveEnemy = noMovementStrategy.Move;
+        moveEnemy = noMovementStrategy;
     }
 }
