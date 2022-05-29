@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3973807350125554827}
   - component: {fileID: 3973807350125554820}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: SimpleEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3973807350125554820}
+          m_MethodName: OnPointerClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 10
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &3973807350125554820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,3 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4587768547bf54bb025170117256e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyMovements: {fileID: 11400000, guid: 15c6a353cc457c44c9111ea6c982464e, type: 2}
+  noMovementStrategy: {fileID: 6358785276349926840, guid: ff192a192d9ca98429cc2d22728380b5,
+    type: 3}
+  playerTransform: {fileID: 0}
+  health: 50

@@ -10,14 +10,14 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private EnemyNullMovementStrategy noMovementStrategy;
     [SerializeField]
-    private Transform playerTransform;
-    [SerializeField]
     private int health;
     private int damageFromGun = 10;
+    private Transform playerTransform;
     private EnemyLogic logic;
 
     private void Start()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         logic = new EnemyLogic(enemyMovements, noMovementStrategy, transform, playerTransform.position, health);
         logic.OnDie += OnDie;
     }
