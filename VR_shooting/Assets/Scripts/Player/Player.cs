@@ -37,6 +37,6 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Die()
     {
-        
+        EventBroker.callOnGameOver();
     }
 }

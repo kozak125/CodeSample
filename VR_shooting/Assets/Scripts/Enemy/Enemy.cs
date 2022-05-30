@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
         logic = new EnemyLogic(enemyMovements, noMovementStrategy, transform, playerTransform.position, health);
         logic.OnAttacking += Attack;
         logic.OnDie += Die;
+        EventBroker.OnGameOver += GameOver;
     }
 
     private void Attack(IDamagable objectToDamage) => StartCoroutine(AttackInIntervals(objectToDamage));
@@ -43,6 +44,11 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(false);
         // expose to editor
         EventBroker.CallOnEnemyDestroyed(10);
+    }
+
+    private void GameOver()
+    {
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -71,5 +77,10 @@ public class Enemy : MonoBehaviour
         {
             logic.OnEnabled();
         }
+    }
+
+    private void OnDestroy()
+    {
+        EventBroker.OnGameOver -= GameOver;
     }
 }

@@ -17,6 +17,12 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        EventBroker.OnGameOver += GameOver;
+    }
+
+    private void GameOver()
+    {
+        enabled = false;
     }
 
     private void Update()
@@ -67,5 +73,10 @@ public class EnemySpawner : MonoBehaviour
     private void SetEnemyRotation(Transform enemyTransform)
     {
         enemyTransform.LookAt(playerTransform);
+    }
+
+    private void OnDestroy()
+    {
+        EventBroker.OnGameOver -= GameOver;
     }
 }

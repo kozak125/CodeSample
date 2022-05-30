@@ -9,4 +9,11 @@ public class EventBroker
     {
         OnEnemyDestroyed?.Invoke(pointValue);
     }
+
+    public static Action OnGameOver;
+
+    public static void callOnGameOver()
+    {
+        OnGameOver?.Invoke();
+    }
 }
