@@ -7,7 +7,8 @@ public class EnemyLogic
     private EnemyMovementPatterns.MovementStrategy noMovementStrategy;
     private Transform enemyTransform;
     private Vector3 playerPosition;
-    private int health;
+    private int currentHealth;
+    private int maxHealth;
     private EnemyMovementPatterns.MovementStrategy moveEnemy;
     private bool isAttacking = false;
 
@@ -20,7 +21,7 @@ public class EnemyLogic
         noMovementStrategy = _noMovement.Move;
         enemyTransform = _enemyTransform;
         playerPosition = _playerPosition;
-        health = _health;
+        currentHealth = maxHealth = _health;
 
         ChangeMovementStrategy(enemyMovements.NormalMovementStrategy);
     }
@@ -36,13 +37,13 @@ public class EnemyLogic
 
     public void RecieveDamage(int damageAmount)
     {
-        health -= damageAmount;
+        currentHealth -= damageAmount;
         CheckForDeath();
     }
 
     private void CheckForDeath()
     {
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
             Die();
             return;
@@ -76,5 +77,11 @@ public class EnemyLogic
         moveEnemy = noMovementStrategy;
         isAttacking = true;
         OnAttacking.Invoke(objectToAttack);
+    }
+
+    public void OnEnabled()
+    {
+        moveEnemy = enemyMovements.NormalMovementStrategy;
+        currentHealth = maxHealth;
     }
 }

@@ -40,8 +40,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        // pool that
-        Destroy(gameObject);
+        gameObject.SetActive(false);
         // expose to editor
         EventBroker.CallOnEnemyDestroyed(10);
     }
@@ -64,5 +63,13 @@ public class Enemy : MonoBehaviour
     private void RecieveDamage()
     {
         logic.RecieveDamage(damageFromGun);
+    }
+
+    private void OnEnable()
+    {
+        if (logic != null)
+        {
+            logic.OnEnabled();
+        }
     }
 }

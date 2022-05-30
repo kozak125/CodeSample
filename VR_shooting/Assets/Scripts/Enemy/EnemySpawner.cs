@@ -6,9 +6,13 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> enemiesToSpawn;
+    [SerializeField]
+    private Transform enemiesParent;
 
     private Transform playerTransform;
     private float timer = 0f;
+    private float timeBetweenSpaw = 3f;
+    private List<GameObject> pooledEnemies = new List<GameObject>();
 
     private void Start()
     {
@@ -18,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 3)
+        if (timer > timeBetweenSpaw)
         {
             SpawnEnemy();
             timer = 0f;
@@ -27,15 +31,37 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        var newEnemy = Instantiate(enemiesToSpawn[0], SetEnemyPosition(), Quaternion.identity);
-        SetEnemyRotation(newEnemy.transform);
+        var enemy = GetEnemy();
+        SetEnemyPosition(enemy.transform);
+        SetEnemyRotation(enemy.transform);
     }
 
-    private Vector3 SetEnemyPosition()
+    private GameObject GetEnemy()
+    {
+        foreach (var enemy in pooledEnemies)
+        {
+            if (!enemy.activeSelf)
+            {
+                enemy.SetActive(true);
+                return enemy;
+            }
+        }
+
+        return CreateNewEnemy();
+    }
+
+    private GameObject CreateNewEnemy()
+    {
+        var newEnemy =Instantiate(enemiesToSpawn[0], enemiesParent);
+        pooledEnemies.Add(newEnemy);
+        return newEnemy;
+    }
+
+    private void SetEnemyPosition(Transform enemyTransform)
     {
         // edge case of Vector2(0, 0) position spawn
         var enemyPosition = Random.insideUnitCircle.normalized * 40f;
-        return new Vector3(enemyPosition.x, 0, enemyPosition.y);
+        enemyTransform.position = new Vector3(enemyPosition.x, 0, enemyPosition.y);
     }
 
     private void SetEnemyRotation(Transform enemyTransform)
