@@ -5,8 +5,14 @@ using TMPro;
 
 public class ScoreTracker : MonoBehaviour
 {
+    [SerializeField]
+    private FloatValue updateScoreInSeconds;
+    
     private TMP_Text scoreText;
-    private int score = 0;
+    private int score;
+    private float timeToUpdateText;
+    private bool isCoroutineRunning = false;
+    // if coroutine is running when enemy destroyed add value
 
     private void Start()
     {
@@ -18,12 +24,32 @@ public class ScoreTracker : MonoBehaviour
     private void AddScore(int scoreToAdd)
     {
         score += scoreToAdd;
-        UpdateScoreText();
+        TryStartUpdatingScoreText();
     }
 
-    private void UpdateScoreText()
+    private void TryStartUpdatingScoreText()
     {
+        if (!isCoroutineRunning)
+        {
+            timeToUpdateText = updateScoreInSeconds.Value;
+            StartCoroutine(nameof(UpdateScoreText));
+            return;
+        }
+
+        timeToUpdateText += updateScoreInSeconds.Value;
+    }
+
+    private IEnumerator UpdateScoreText()
+    {
+        isCoroutineRunning = true;
+        while (timeToUpdateText >= 0)
+        {
+            timeToUpdateText -= Time.deltaTime;
+            yield return null;
+        }
+
         scoreText.text = score.ToString();
+        isCoroutineRunning = false;
     }
 
     private void OnDisable()
