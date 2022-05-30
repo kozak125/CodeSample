@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using GoogleVR;
+﻿using UnityEngine;
 
 public class RotateAroundPlayer : MonoBehaviour
 {

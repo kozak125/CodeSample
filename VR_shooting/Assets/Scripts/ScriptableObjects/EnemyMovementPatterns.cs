@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "New Enemy Movement Patterns")]
 public class EnemyMovementPatterns : ScriptableObject

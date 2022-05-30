@@ -7,8 +7,9 @@ public class Player : MonoBehaviour, IDamagable
 {
     [SerializeField]
     private HealthBar healthBar;
-
+    [SerializeField]
     private int health = 100;
+
     private Action<int> onDamageTaken;
 
 

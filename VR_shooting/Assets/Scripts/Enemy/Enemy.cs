@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -13,7 +11,10 @@ public class Enemy : MonoBehaviour
     private int health;
     [SerializeField]
     private float attackSpeed;
+    [SerializeField]
     private int attackDamage = 10;
+    [SerializeField]
+    private int pointsForKilling = 10;
     private int damageFromGun = 10;
     private Transform playerTransform;
     private EnemyLogic logic;
@@ -42,8 +43,7 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         gameObject.SetActive(false);
-        // expose to editor
-        EventBroker.CallOnEnemyDestroyed(10);
+        EventBroker.CallOnEnemyDestroyed(pointsForKilling);
     }
 
     private void GameOver()

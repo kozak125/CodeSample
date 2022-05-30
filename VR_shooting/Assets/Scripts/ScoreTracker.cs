@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -12,7 +11,6 @@ public class ScoreTracker : MonoBehaviour
     private int score;
     private float timeToUpdateText;
     private bool isCoroutineRunning = false;
-    // if coroutine is running when enemy destroyed add value
 
     private void Start()
     {
