@@ -21,7 +21,7 @@ namespace VRShooter.UI
 			EventBroker.OnEnemyDestroyed += AddScore;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             EventBroker.OnEnemyDestroyed -= AddScore;
         }
