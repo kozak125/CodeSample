@@ -11,7 +11,7 @@ run out of time. The game works without errors (except for one rare edge case, I
 to be working for some reason. Enter settings and from there you can just shut the game down.
 
 To run the game:
-1. In editor: Open the project in Unity 2019.4.39 and press play. Hold shift to tilt your view and alt to rotate around.
+1. In editor: Open the project in Unity 2019.4.39 and press play. Hold control to tilt your view and alt to rotate around.
 Click when cursor is on enemy to shoot.
 2. On the phone: Copy the provided VRShooter.apk to your phone and install it. Once installed open the app and don't
 forget the Google Cardboard VR. Click the button on Cardboard to shoot when cursor is over an enemy.
