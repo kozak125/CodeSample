@@ -38,7 +38,7 @@ namespace VRShooter.Enemy
             var attacksInterval = new WaitForSeconds(attackSpeed);
             while (true)
             {
-                objectToDamage.GetDamaged(attackDamage);
+                objectToDamage.OnDamageReceived(attackDamage);
                 yield return attacksInterval;
             }
         }
