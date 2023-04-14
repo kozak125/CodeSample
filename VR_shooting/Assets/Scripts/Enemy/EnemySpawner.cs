@@ -10,8 +10,9 @@ public class EnemySpawner : MonoBehaviour
 
     private Transform playerTransform;
     private float timer = 0f;
-    private float timeBetweenSpaw = 3f;
     private List<GameObject> pooledEnemies = new List<GameObject>();
+
+    private const float TIME_BETWEEN_SPAWN = 3f;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        if (timer > timeBetweenSpaw)
+        if (timer > TIME_BETWEEN_SPAWN)
         {
             SpawnEnemy();
             timer = 0f;

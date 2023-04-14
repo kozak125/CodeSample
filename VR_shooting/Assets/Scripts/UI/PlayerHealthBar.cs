@@ -9,11 +9,12 @@ public class PlayerHealthBar : MonoBehaviour
     private Slider damageBar;
     
     private Slider healthBar;
-    private WaitForSeconds waitSecondsToSubstractDamage = new WaitForSeconds(1f);
-    private WaitForSeconds damageSubstractionSpeed = new WaitForSeconds(0.1f);
-    private int damageSubstractionSmoothing = 1;
     private bool isCoroutineRunning = false;
-    
+
+    private readonly WaitForSeconds waitSecondsToSubstractDamage = new WaitForSeconds(1f);
+    private readonly WaitForSeconds damageSubstractionSpeed = new WaitForSeconds(0.1f);
+    private const int DAMAGE_SUBSTRACTION_SMOOTHING = 1;
+
     public void Setup(int maxHealth)
     {
         healthBar = GetComponent<Slider>();
@@ -38,7 +39,7 @@ public class PlayerHealthBar : MonoBehaviour
         yield return waitSecondsToSubstractDamage;
         while (damageBar.value > healthBar.value)
         {
-            damageBar.value -= damageSubstractionSmoothing;
+            damageBar.value -= DAMAGE_SUBSTRACTION_SMOOTHING;
             yield return damageSubstractionSpeed;
         }
 
