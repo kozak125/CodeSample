@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     private int attackDamage = 10;
     [SerializeField]
     private int pointsForKilling = 10;
+    [SerializeField]
     private int damageFromGun = 10;
     private Transform playerTransform;
     private EnemyLogic logic;
