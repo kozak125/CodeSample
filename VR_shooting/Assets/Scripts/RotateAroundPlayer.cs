@@ -1,32 +1,35 @@
 ﻿using UnityEngine;
 
-public class RotateAroundPlayer : MonoBehaviour
+namespace VRShooter
 {
-    [SerializeField]
-    private Transform cameraTransform;
-
-    private Vector3 offset;
-    private Vector3 previousHeadRotation;
-
-    private void Start()
+    public class RotateAroundPlayer : MonoBehaviour
     {
-        offset = transform.position - cameraTransform.position;
-        previousHeadRotation = GvrVRHelpers.GetHeadRotation().eulerAngles;
-    }
+        [SerializeField]
+        private Transform cameraTransform;
 
-    private void LateUpdate()
-    {
-        offset = CalculateOffset();
-        
-        transform.position = Vector3.Lerp(transform.position, cameraTransform.position + offset, 0.1f);
-        transform.LookAt(cameraTransform);
-    }
+        private Vector3 offset;
+        private Vector3 previousHeadRotation;
 
-    private Vector3 CalculateOffset()
-    {
-        var angle = GvrVRHelpers.GetHeadRotation().eulerAngles.y - previousHeadRotation.y;
-        previousHeadRotation = GvrVRHelpers.GetHeadRotation().eulerAngles;
+        private void Start()
+        {
+            offset = transform.position - cameraTransform.position;
+            previousHeadRotation = GvrVRHelpers.GetHeadRotation().eulerAngles;
+        }
 
-        return Quaternion.AngleAxis(angle, Vector3.up) * offset;
+        private void LateUpdate()
+        {
+            offset = CalculateOffset();
+
+            transform.position = Vector3.Lerp(transform.position, cameraTransform.position + offset, 0.1f);
+            transform.LookAt(cameraTransform);
+        }
+
+        private Vector3 CalculateOffset()
+        {
+            var angle = GvrVRHelpers.GetHeadRotation().eulerAngles.y - previousHeadRotation.y;
+            previousHeadRotation = GvrVRHelpers.GetHeadRotation().eulerAngles;
+
+            return Quaternion.AngleAxis(angle, Vector3.up) * offset;
+        }
     }
 }

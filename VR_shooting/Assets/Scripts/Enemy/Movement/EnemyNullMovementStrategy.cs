@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public sealed class EnemyNullMovementStrategy : EnemyBaseMovementStrategy
+namespace VRShooter.Enemy
 {
-    public override void Move(Transform enemyTranform, Vector3 playerPosition)
+    public sealed class EnemyNullMovementStrategy : EnemyBaseMovementStrategy
     {
-        // don't move
+        public override void Move(Transform enemyTranform, Vector3 playerPosition)
+        {
+            // don't move
+        }
     }
 }

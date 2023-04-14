@@ -1,4 +1,7 @@
-﻿public interface IDamagable
+﻿namespace VRShooter
 {
-    void GetDamaged(int damageAmount);
+    public interface IDamagable
+    {
+        void GetDamaged(int damageAmount);
+    }
 }

@@ -1,82 +1,85 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+namespace VRShooter
 {
-    [SerializeField]
-    private List<GameObject> enemiesToSpawn;
-    [SerializeField]
-    private Transform enemiesParent;
-
-    private Transform playerTransform;
-    private float timer = 0f;
-    private List<GameObject> pooledEnemies = new List<GameObject>();
-
-    private const float TIME_BETWEEN_SPAWN = 3f;
-
-    private void Start()
+    public class EnemySpawner : MonoBehaviour
     {
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        EventBroker.OnGameOver += GameOver;
-    }
+        [SerializeField]
+        private List<GameObject> enemiesToSpawn;
+        [SerializeField]
+        private Transform enemiesParent;
 
-    private void GameOver()
-    {
-        enabled = false;
-    }
+        private Transform playerTransform;
+        private float timer = 0f;
+        private List<GameObject> pooledEnemies = new List<GameObject>();
 
-    private void Update()
-    {
-        timer += Time.deltaTime;
-        if (timer > TIME_BETWEEN_SPAWN)
+        private const float TIME_BETWEEN_SPAWN = 3f;
+
+        private void Start()
         {
-            SpawnEnemy();
-            timer = 0f;
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            EventBroker.OnGameOver += GameOver;
         }
-    }
 
-    private void SpawnEnemy()
-    {
-        var enemy = GetEnemy();
-        SetEnemyPosition(enemy.transform);
-        SetEnemyRotation(enemy.transform);
-    }
-
-    private GameObject GetEnemy()
-    {
-        foreach (var enemy in pooledEnemies)
+        private void GameOver()
         {
-            if (!enemy.activeSelf)
+            enabled = false;
+        }
+
+        private void Update()
+        {
+            timer += Time.deltaTime;
+            if (timer > TIME_BETWEEN_SPAWN)
             {
-                enemy.SetActive(true);
-                return enemy;
+                SpawnEnemy();
+                timer = 0f;
             }
         }
 
-        return CreateNewEnemy();
-    }
+        private void SpawnEnemy()
+        {
+            var enemy = GetEnemy();
+            SetEnemyPosition(enemy.transform);
+            SetEnemyRotation(enemy.transform);
+        }
 
-    private GameObject CreateNewEnemy()
-    {
-        var newEnemy =Instantiate(enemiesToSpawn[0], enemiesParent);
-        pooledEnemies.Add(newEnemy);
-        return newEnemy;
-    }
+        private GameObject GetEnemy()
+        {
+            foreach (var enemy in pooledEnemies)
+            {
+                if (!enemy.activeSelf)
+                {
+                    enemy.SetActive(true);
+                    return enemy;
+                }
+            }
 
-    private void SetEnemyPosition(Transform enemyTransform)
-    {
-        // edge case of Vector2(0, 0) position spawn
-        var enemyPosition = Random.insideUnitCircle.normalized * 40f;
-        enemyTransform.position = new Vector3(enemyPosition.x, 0, enemyPosition.y);
-    }
+            return CreateNewEnemy();
+        }
 
-    private void SetEnemyRotation(Transform enemyTransform)
-    {
-        enemyTransform.LookAt(playerTransform);
-    }
+        private GameObject CreateNewEnemy()
+        {
+            var newEnemy = Instantiate(enemiesToSpawn[0], enemiesParent);
+            pooledEnemies.Add(newEnemy);
+            return newEnemy;
+        }
 
-    private void OnDestroy()
-    {
-        EventBroker.OnGameOver -= GameOver;
+        private void SetEnemyPosition(Transform enemyTransform)
+        {
+            // edge case of Vector2(0, 0) position spawn
+            var enemyPosition = Random.insideUnitCircle.normalized * 40f;
+            enemyTransform.position = new Vector3(enemyPosition.x, 0, enemyPosition.y);
+        }
+
+        private void SetEnemyRotation(Transform enemyTransform)
+        {
+            enemyTransform.LookAt(playerTransform);
+        }
+
+        private void OnDestroy()
+        {
+            EventBroker.OnGameOver -= GameOver;
+        }
     }
 }

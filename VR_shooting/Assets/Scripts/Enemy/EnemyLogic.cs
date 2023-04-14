@@ -1,86 +1,89 @@
 ﻿using UnityEngine;
 using System;
 
-public class EnemyLogic
+namespace VRShooter.Enemy
 {
-    public event Action OnDie;
-    public event Action<IDamagable> OnAttacking;
-
-    private EnemyMovementPatterns enemyMovements;
-    private EnemyMovementPatterns.MovementStrategy noMovementStrategy;
-    private Transform enemyTransform;
-    private Vector3 playerPosition;
-    private int currentHealth;
-    private int maxHealth;
-    private EnemyMovementPatterns.MovementStrategy moveEnemy;
-    private bool isAttacking = false;
-
-    public EnemyLogic(EnemyMovementPatterns _enemyMovements, EnemyNullMovementStrategy _noMovement, Transform _enemyTransform, Vector3 _playerPosition, int _health)
+    public class EnemyLogic
     {
-        enemyMovements = _enemyMovements;
-        noMovementStrategy = _noMovement.Move;
-        enemyTransform = _enemyTransform;
-        playerPosition = _playerPosition;
-        currentHealth = maxHealth = _health;
+        public event Action OnDie;
+        public event Action<IDamagable> OnAttacking;
 
-        ChangeMovementStrategy(enemyMovements.NormalMovementStrategy);
-    }
+        private EnemyMovementPatterns enemyMovements;
+        private EnemyMovementPatterns.MovementStrategy noMovementStrategy;
+        private Transform enemyTransform;
+        private Vector3 playerPosition;
+        private int currentHealth;
+        private int maxHealth;
+        private EnemyMovementPatterns.MovementStrategy moveEnemy;
+        private bool isAttacking = false;
 
-
-    private void ChangeMovementStrategy(EnemyMovementPatterns.MovementStrategy movementStrategy)
-    {
-        if (!isAttacking)
+        public EnemyLogic(EnemyMovementPatterns _enemyMovements, EnemyNullMovementStrategy _noMovement, Transform _enemyTransform, Vector3 _playerPosition, int _health)
         {
-            moveEnemy = movementStrategy;
-        }
-    }
+            enemyMovements = _enemyMovements;
+            noMovementStrategy = _noMovement.Move;
+            enemyTransform = _enemyTransform;
+            playerPosition = _playerPosition;
+            currentHealth = maxHealth = _health;
 
-    public void RecieveDamage(int damageAmount)
-    {
-        currentHealth -= damageAmount;
-        CheckForDeath();
-    }
-
-    private void CheckForDeath()
-    {
-        if (currentHealth <= 0)
-        {
-            Die();
-            return;
+            ChangeMovementStrategy(enemyMovements.NormalMovementStrategy);
         }
 
-        ChangeMovementStrategy(enemyMovements.ShotMovementStrategy);
-    }
 
-    private void Die()
-    {
-        ChangeMovementStrategy(noMovementStrategy);
-        OnDie.Invoke();
-    }
+        private void ChangeMovementStrategy(EnemyMovementPatterns.MovementStrategy movementStrategy)
+        {
+            if (!isAttacking)
+            {
+                moveEnemy = movementStrategy;
+            }
+        }
 
-    public void UpdateLogic()
-    {
-        moveEnemy(enemyTransform, playerPosition);
-    }
+        public void RecieveDamage(int damageAmount)
+        {
+            currentHealth -= damageAmount;
+            CheckForDeath();
+        }
 
-    public void OnTriggerEnter(Collider other)
-    {
-		if (other.TryGetComponent(out IDamagable damagable))
-		{
-            Attack(damagable);
-		}
-    }
+        private void CheckForDeath()
+        {
+            if (currentHealth <= 0)
+            {
+                Die();
+                return;
+            }
 
-    private void Attack(IDamagable objectToAttack)
-    {
-        moveEnemy = noMovementStrategy;
-        isAttacking = true;
-        OnAttacking.Invoke(objectToAttack);
-    }
+            ChangeMovementStrategy(enemyMovements.ShotMovementStrategy);
+        }
 
-    public void OnEnabled()
-    {
-        moveEnemy = enemyMovements.NormalMovementStrategy;
-        currentHealth = maxHealth;
+        private void Die()
+        {
+            ChangeMovementStrategy(noMovementStrategy);
+            OnDie.Invoke();
+        }
+
+        public void UpdateLogic()
+        {
+            moveEnemy(enemyTransform, playerPosition);
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out IDamagable damagable))
+            {
+                Attack(damagable);
+            }
+        }
+
+        private void Attack(IDamagable objectToAttack)
+        {
+            moveEnemy = noMovementStrategy;
+            isAttacking = true;
+            OnAttacking.Invoke(objectToAttack);
+        }
+
+        public void OnEnabled()
+        {
+            moveEnemy = enemyMovements.NormalMovementStrategy;
+            currentHealth = maxHealth;
+        }
     }
 }

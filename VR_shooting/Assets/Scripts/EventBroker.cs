@@ -1,17 +1,20 @@
 ﻿using System;
 
-public static class EventBroker
+namespace VRShooter
 {
-    public static event Action<int> OnEnemyDestroyed;
-    public static event Action OnGameOver;
-
-    public static void CallOnEnemyDestroyed(int pointValue)
+    public static class EventBroker
     {
-        OnEnemyDestroyed?.Invoke(pointValue);
-    }
+        public static event Action<int> OnEnemyDestroyed;
+        public static event Action OnGameOver;
 
-    public static void CallOnGameOver()
-    {
-        OnGameOver?.Invoke();
+        public static void CallOnEnemyDestroyed(int pointValue)
+        {
+            OnEnemyDestroyed?.Invoke(pointValue);
+        }
+
+        public static void CallOnGameOver()
+        {
+            OnGameOver?.Invoke();
+        }
     }
 }

@@ -1,36 +1,39 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using VRShooter.Player.UI;
 
-public class Player : MonoBehaviour, IDamagable
+namespace VRShooter.Player
 {
-    [SerializeField]
-    private PlayerHealthBar healthBar;
-    [SerializeField]
-    private int health = 100;
-
-    private void Start()
+    public class Player : MonoBehaviour, IDamagable
     {
-        healthBar.Setup(health);
-    }
+        [SerializeField]
+        private PlayerHealthBar healthBar;
+        [SerializeField]
+        private int health = 100;
 
-    public void GetDamaged(int damageAmout)
-    {
-        health -= damageAmout;
-        healthBar.SubstractHealth(damageAmout);
-
-        CheckForDeath();
-    }
-
-    private void CheckForDeath()
-    {
-        if (health <= 0)
+        private void Start()
         {
-            Die();
+            healthBar.Setup(health);
         }
-    }
 
-    private void Die()
-    {
-        EventBroker.CallOnGameOver();
+        public void GetDamaged(int damageAmout)
+        {
+            health -= damageAmout;
+            healthBar.SubstractHealth(damageAmout);
+
+            CheckForDeath();
+        }
+
+        private void CheckForDeath()
+        {
+            if (health <= 0)
+            {
+                Die();
+            }
+        }
+
+        private void Die()
+        {
+            EventBroker.CallOnGameOver();
+        }
     }
 }

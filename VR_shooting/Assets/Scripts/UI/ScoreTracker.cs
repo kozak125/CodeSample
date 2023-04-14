@@ -2,56 +2,59 @@
 using UnityEngine;
 using TMPro;
 
-public class ScoreTracker : MonoBehaviour
+namespace VRShooter.UI
 {
-    [SerializeField]
-    private FloatValue updateScoreInSeconds;
-    
-    private TMP_Text scoreText;
-    private int score;
-    private float timeToUpdateText;
-    private bool isCoroutineRunning = false;
-
-    private void Start()
+    public class ScoreTracker : MonoBehaviour
     {
-        scoreText = GetComponent<TMP_Text>();
-        UpdateScoreText();
-        EventBroker.OnEnemyDestroyed += AddScore;
-    }
+        [SerializeField]
+        private FloatValue updateScoreInSeconds;
 
-    private void AddScore(int scoreToAdd)
-    {
-        score += scoreToAdd;
-        TryStartUpdatingScoreText();
-    }
+        private TMP_Text scoreText;
+        private int score;
+        private float timeToUpdateText;
+        private bool isCoroutineRunning = false;
 
-    private void TryStartUpdatingScoreText()
-    {
-        if (!isCoroutineRunning)
+        private void Start()
         {
-            timeToUpdateText = updateScoreInSeconds.Value;
-            StartCoroutine(nameof(UpdateScoreText));
-            return;
+            scoreText = GetComponent<TMP_Text>();
+            UpdateScoreText();
+            EventBroker.OnEnemyDestroyed += AddScore;
         }
 
-        timeToUpdateText += updateScoreInSeconds.Value;
-    }
-
-    private IEnumerator UpdateScoreText()
-    {
-        isCoroutineRunning = true;
-        while (timeToUpdateText >= 0)
+        private void AddScore(int scoreToAdd)
         {
-            timeToUpdateText -= Time.deltaTime;
-            yield return null;
+            score += scoreToAdd;
+            TryStartUpdatingScoreText();
         }
 
-        scoreText.text = score.ToString();
-        isCoroutineRunning = false;
-    }
+        private void TryStartUpdatingScoreText()
+        {
+            if (!isCoroutineRunning)
+            {
+                timeToUpdateText = updateScoreInSeconds.Value;
+                StartCoroutine(nameof(UpdateScoreText));
+                return;
+            }
 
-    private void OnDisable()
-    {
-        EventBroker.OnEnemyDestroyed -= AddScore;
+            timeToUpdateText += updateScoreInSeconds.Value;
+        }
+
+        private IEnumerator UpdateScoreText()
+        {
+            isCoroutineRunning = true;
+            while (timeToUpdateText >= 0)
+            {
+                timeToUpdateText -= Time.deltaTime;
+                yield return null;
+            }
+
+            scoreText.text = score.ToString();
+            isCoroutineRunning = false;
+        }
+
+        private void OnDisable()
+        {
+            EventBroker.OnEnemyDestroyed -= AddScore;
+        }
     }
 }

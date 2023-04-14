@@ -1,87 +1,90 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace VRShooter.Enemy
 {
-    [SerializeField]
-    private EnemyMovementPatterns enemyMovements;
-    [SerializeField]
-    private EnemyNullMovementStrategy noMovementStrategy;
-    [SerializeField]
-    private int health;
-    [SerializeField]
-    private float attackSpeed;
-    [SerializeField]
-    private int attackDamage = 10;
-    [SerializeField]
-    private int pointsForKilling = 10;
-    [SerializeField]
-    private int damageFromGun = 10;
-    private Transform playerTransform;
-    private EnemyLogic logic;
-
-    private void Start()
+    public class Enemy : MonoBehaviour
     {
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        logic = new EnemyLogic(enemyMovements, noMovementStrategy, transform, playerTransform.position, health);
-        logic.OnAttacking += Attack;
-        logic.OnDie += Die;
-        EventBroker.OnGameOver += GameOver;
-    }
+        [SerializeField]
+        private EnemyMovementPatterns enemyMovements;
+        [SerializeField]
+        private EnemyNullMovementStrategy noMovementStrategy;
+        [SerializeField]
+        private int health;
+        [SerializeField]
+        private float attackSpeed;
+        [SerializeField]
+        private int attackDamage = 10;
+        [SerializeField]
+        private int pointsForKilling = 10;
+        [SerializeField]
+        private int damageFromGun = 10;
+        private Transform playerTransform;
+        private EnemyLogic logic;
 
-    private void Attack(IDamagable objectToDamage) => StartCoroutine(AttackInIntervals(objectToDamage));
-
-    private IEnumerator AttackInIntervals(IDamagable objectToDamage)
-    {
-        var attacksInterval = new WaitForSeconds(attackSpeed);
-        while (true)
+        private void Start()
         {
-            objectToDamage.GetDamaged(attackDamage);
-            yield return attacksInterval;
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            logic = new EnemyLogic(enemyMovements, noMovementStrategy, transform, playerTransform.position, health);
+            logic.OnAttacking += Attack;
+            logic.OnDie += Die;
+            EventBroker.OnGameOver += GameOver;
         }
-    }
 
-    private void Die()
-    {
-        gameObject.SetActive(false);
-        EventBroker.CallOnEnemyDestroyed(pointsForKilling);
-    }
+        private void Attack(IDamagable objectToDamage) => StartCoroutine(AttackInIntervals(objectToDamage));
 
-    private void GameOver()
-    {
-        gameObject.SetActive(false);
-    }
-
-    private void Update()
-    {
-        logic.UpdateLogic();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        logic.OnTriggerEnter(other);
-    }
-
-    public void OnPointerClick()
-    {
-        RecieveDamage();
-    }
-
-    private void RecieveDamage()
-    {
-        logic.RecieveDamage(damageFromGun);
-    }
-
-    private void OnEnable()
-    {
-        if (logic != null)
+        private IEnumerator AttackInIntervals(IDamagable objectToDamage)
         {
-            logic.OnEnabled();
+            var attacksInterval = new WaitForSeconds(attackSpeed);
+            while (true)
+            {
+                objectToDamage.GetDamaged(attackDamage);
+                yield return attacksInterval;
+            }
         }
-    }
 
-    private void OnDestroy()
-    {
-        EventBroker.OnGameOver -= GameOver;
+        private void Die()
+        {
+            gameObject.SetActive(false);
+            EventBroker.CallOnEnemyDestroyed(pointsForKilling);
+        }
+
+        private void GameOver()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void Update()
+        {
+            logic.UpdateLogic();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            logic.OnTriggerEnter(other);
+        }
+
+        public void OnPointerClick()
+        {
+            RecieveDamage();
+        }
+
+        private void RecieveDamage()
+        {
+            logic.RecieveDamage(damageFromGun);
+        }
+
+        private void OnEnable()
+        {
+            if (logic != null)
+            {
+                logic.OnEnabled();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            EventBroker.OnGameOver -= GameOver;
+        }
     }
 }

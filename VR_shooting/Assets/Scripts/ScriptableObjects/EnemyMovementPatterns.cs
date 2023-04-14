@@ -1,39 +1,42 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "New Enemy Movement Patterns")]
-public class EnemyMovementPatterns : ScriptableObject
+namespace VRShooter.Enemy
 {
-    [SerializeField]
-    private EnemyBaseMovementStrategy normalMovementStrategy;
-    [SerializeField]
-    private EnemyBaseMovementStrategy shotMovementStrategy;
-    [SerializeField]
-    private EnemyBaseMovementStrategy erraticMovementStrategy;
-
-    public delegate void MovementStrategy(Transform enemyTransform, Vector3 playerPosition);
-    public MovementStrategy NormalMovementStrategy => normalMovementStrategy.Move;
-    public MovementStrategy ShotMovementStrategy
+    [CreateAssetMenu(menuName = "New Enemy Movement Patterns")]
+    public class EnemyMovementPatterns : ScriptableObject
     {
-        get
-        {
-            if (shotMovementStrategy != null)
-            {
-                return shotMovementStrategy.Move;
-            }
+        [SerializeField]
+        private EnemyBaseMovementStrategy normalMovementStrategy;
+        [SerializeField]
+        private EnemyBaseMovementStrategy shotMovementStrategy;
+        [SerializeField]
+        private EnemyBaseMovementStrategy erraticMovementStrategy;
 
-            return NormalMovementStrategy;
+        public delegate void MovementStrategy(Transform enemyTransform, Vector3 playerPosition);
+        public MovementStrategy NormalMovementStrategy => normalMovementStrategy.Move;
+        public MovementStrategy ShotMovementStrategy
+        {
+            get
+            {
+                if (shotMovementStrategy != null)
+                {
+                    return shotMovementStrategy.Move;
+                }
+
+                return NormalMovementStrategy;
+            }
         }
-    }
-    public MovementStrategy ErraticMovementStrategy
-    {
-        get
+        public MovementStrategy ErraticMovementStrategy
         {
-            if (erraticMovementStrategy != null)
+            get
             {
-                return erraticMovementStrategy.Move;
-            }
+                if (erraticMovementStrategy != null)
+                {
+                    return erraticMovementStrategy.Move;
+                }
 
-            return NormalMovementStrategy;
+                return NormalMovementStrategy;
+            }
         }
     }
 }

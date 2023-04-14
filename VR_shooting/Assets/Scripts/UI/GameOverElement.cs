@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 using TMPro;
 
-public class GameOverElement : MonoBehaviour
+namespace VRShooter.UI
 {
-    void Awake()
+    public class GameOverElement : MonoBehaviour
     {
-        EventBroker.OnGameOver += GameOver;
-    }
+        void Awake()
+        {
+            EventBroker.OnGameOver += GameOver;
+        }
 
-    private void GameOver()
-    {
-        GetComponent<TMP_Text>().enabled = true;
-    }
+        private void GameOver()
+        {
+            GetComponent<TMP_Text>().enabled = true;
+        }
 
-    private void OnDestroy()
-    {
-        EventBroker.OnGameOver -= GameOver;
+        private void OnDestroy()
+        {
+            EventBroker.OnGameOver -= GameOver;
+        }
     }
 }
