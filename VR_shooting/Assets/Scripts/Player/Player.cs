@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamagable
 {
+    private event Action<int> onDamageTaken;
+
     [SerializeField]
     private HealthBar healthBar;
     [SerializeField]
     private int health = 100;
-
-    private Action<int> onDamageTaken;
-
-    public Action OnAttacked;
 
     private void Start()
     {

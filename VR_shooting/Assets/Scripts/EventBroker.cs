@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class EventBroker
 {
-    public static Action<int> OnEnemyDestroyed;
-    public static Action OnGameOver;
+    public static event Action<int> OnEnemyDestroyed;
+    public static event Action OnGameOver;
 
     public static void CallOnEnemyDestroyed(int pointValue)
     {

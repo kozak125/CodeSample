@@ -3,6 +3,9 @@ using System;
 
 public class EnemyLogic
 {
+    public event Action OnDie;
+    public event Action<IDamagable> OnAttacking;
+
     private EnemyMovementPatterns enemyMovements;
     private EnemyMovementPatterns.MovementStrategy noMovementStrategy;
     private Transform enemyTransform;
@@ -11,9 +14,6 @@ public class EnemyLogic
     private int maxHealth;
     private EnemyMovementPatterns.MovementStrategy moveEnemy;
     private bool isAttacking = false;
-
-    public Action OnDie;
-    public Action<IDamagable> OnAttacking;
 
     public EnemyLogic(EnemyMovementPatterns _enemyMovements, EnemyNullMovementStrategy _noMovement, Transform _enemyTransform, Vector3 _playerPosition, int _health)
     {
