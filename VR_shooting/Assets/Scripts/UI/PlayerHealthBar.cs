@@ -18,7 +18,16 @@ namespace VRShooter.UI
         private readonly WaitForSeconds damageSubstractionSpeed = new WaitForSeconds(0.1f);
         private const int DAMAGE_SUBSTRACTION_SMOOTHING = 1;
 
-        public void Start()
+        public void SubstractHealth(float amount)
+        {
+            healthBar.value -= amount;
+            if (!isCoroutineRunning)
+            {
+                StartCoroutine(nameof(SmoothSubstractDamage));
+            }
+        }
+
+        private void Start()
         {
             healthBar = GetComponent<Slider>();
             healthBar.value = healthBar.maxValue = maxPlayerHealth.Value;
@@ -28,13 +37,10 @@ namespace VRShooter.UI
             EventBroker.OnDamageReceived += SubstractHealth;
         }
 
-        public void SubstractHealth(float amount)
+        private void OnDestroy()
         {
-            healthBar.value -= amount;
-            if (!isCoroutineRunning)
-            {
-                StartCoroutine(nameof(SmoothSubstractDamage));
-            }
+            EventBroker.OnGameOver -= GameOver;
+            EventBroker.OnDamageReceived -= SubstractHealth;
         }
 
         private IEnumerator SmoothSubstractDamage()
@@ -54,12 +60,6 @@ namespace VRShooter.UI
         {
             gameObject.SetActive(false);
             damageBar.gameObject.SetActive(false);
-        }
-
-        private void OnDestroy()
-        {
-            EventBroker.OnGameOver -= GameOver;
-            EventBroker.OnDamageReceived -= SubstractHealth;
         }
     }
 }

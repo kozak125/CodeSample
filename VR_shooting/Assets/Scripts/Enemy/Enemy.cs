@@ -30,6 +30,11 @@ namespace VRShooter.Enemies
             EventBroker.OnGameOver += GameOver;
         }
 
+        public void OnPointerClick()
+        {
+            RecieveDamage();
+        }
+
         private void Attack(IDamagable objectToDamage) => StartCoroutine(AttackInIntervals(objectToDamage));
 
         private IEnumerator AttackInIntervals(IDamagable objectToDamage)
@@ -61,11 +66,6 @@ namespace VRShooter.Enemies
         private void OnTriggerEnter(Collider other)
         {
             logic.OnTriggerEnter(other);
-        }
-
-        public void OnPointerClick()
-        {
-            RecieveDamage();
         }
 
         private void RecieveDamage()

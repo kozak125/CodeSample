@@ -24,6 +24,11 @@ namespace VRShooter
             InvokeRepeating(nameof(SpawnEnemy), 0f, TIME_BETWEEN_SPAWN);
         }
 
+        private void OnDestroy()
+        {
+            EventBroker.OnGameOver -= GameOver;
+        }
+
         private void GameOver()
         {
             enabled = false;
@@ -68,11 +73,6 @@ namespace VRShooter
         private void SetEnemyRotation(Transform enemyTransform)
         {
             enemyTransform.LookAt(playerTransform);
-        }
-
-        private void OnDestroy()
-        {
-            EventBroker.OnGameOver -= GameOver;
         }
     }
 }

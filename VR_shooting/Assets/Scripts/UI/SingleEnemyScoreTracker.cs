@@ -21,6 +21,11 @@ namespace VRShooter.UI
             EventBroker.OnEnemyDestroyed += ShowEnemyScore;
         }
 
+        private void OnDisable()
+        {
+            EventBroker.OnEnemyDestroyed -= ShowEnemyScore;
+        }
+
         private void ShowEnemyScore(int scoreToShow)
         {
             if (!isShowingScore)
@@ -59,11 +64,6 @@ namespace VRShooter.UI
             enemyScore = 0;
             singleEnemyScoreText.text = "";
             isShowingScore = false;
-        }
-
-        private void OnDisable()
-        {
-            EventBroker.OnEnemyDestroyed -= ShowEnemyScore;
         }
     }
 }

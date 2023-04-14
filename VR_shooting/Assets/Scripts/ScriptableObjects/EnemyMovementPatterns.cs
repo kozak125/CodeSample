@@ -14,6 +14,7 @@ namespace VRShooter.Enemies
 
         public delegate void MovementStrategy(Transform enemyTransform, Vector3 playerPosition);
         public MovementStrategy NormalMovementStrategy => normalMovementStrategy.Move;
+
         public MovementStrategy ShotMovementStrategy
         {
             get
@@ -26,6 +27,7 @@ namespace VRShooter.Enemies
                 return NormalMovementStrategy;
             }
         }
+
         public MovementStrategy ErraticMovementStrategy
         {
             get

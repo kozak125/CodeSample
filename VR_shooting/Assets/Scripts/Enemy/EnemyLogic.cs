@@ -29,6 +29,30 @@ namespace VRShooter.Enemies
             ChangeMovementStrategy(enemyMovements.NormalMovementStrategy);
         }
 
+        public void RecieveDamage(int damageAmount)
+        {
+            currentHealth -= damageAmount;
+            CheckForDeath();
+        }
+
+        public void UpdateLogic()
+        {
+            moveEnemy(enemyTransform, playerPosition);
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out IDamagable damagable))
+            {
+                Attack(damagable);
+            }
+        }
+
+        public void OnEnabled()
+        {
+            moveEnemy = enemyMovements.NormalMovementStrategy;
+            currentHealth = maxHealth;
+        }
 
         private void ChangeMovementStrategy(EnemyMovementPatterns.MovementStrategy movementStrategy)
         {
@@ -36,12 +60,6 @@ namespace VRShooter.Enemies
             {
                 moveEnemy = movementStrategy;
             }
-        }
-
-        public void RecieveDamage(int damageAmount)
-        {
-            currentHealth -= damageAmount;
-            CheckForDeath();
         }
 
         private void CheckForDeath()
@@ -61,30 +79,11 @@ namespace VRShooter.Enemies
             OnDie.Invoke();
         }
 
-        public void UpdateLogic()
-        {
-            moveEnemy(enemyTransform, playerPosition);
-        }
-
-        public void OnTriggerEnter(Collider other)
-        {
-            if (other.TryGetComponent(out IDamagable damagable))
-            {
-                Attack(damagable);
-            }
-        }
-
         private void Attack(IDamagable objectToAttack)
         {
             moveEnemy = noMovementStrategy;
             isAttacking = true;
             OnAttacking.Invoke(objectToAttack);
-        }
-
-        public void OnEnabled()
-        {
-            moveEnemy = enemyMovements.NormalMovementStrategy;
-            currentHealth = maxHealth;
         }
     }
 }

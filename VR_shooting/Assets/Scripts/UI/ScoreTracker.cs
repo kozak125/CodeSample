@@ -17,8 +17,13 @@ namespace VRShooter.UI
         private void Start()
         {
             scoreText = GetComponent<TMP_Text>();
-            UpdateScoreText();
-            EventBroker.OnEnemyDestroyed += AddScore;
+			StartCoroutine(UpdateScoreText());
+			EventBroker.OnEnemyDestroyed += AddScore;
+        }
+
+        private void OnDisable()
+        {
+            EventBroker.OnEnemyDestroyed -= AddScore;
         }
 
         private void AddScore(int scoreToAdd)
@@ -32,7 +37,7 @@ namespace VRShooter.UI
             if (!isCoroutineRunning)
             {
                 timeToUpdateText = updateScoreInSeconds.Value;
-                StartCoroutine(nameof(UpdateScoreText));
+                StartCoroutine(UpdateScoreText());
                 return;
             }
 
@@ -50,11 +55,6 @@ namespace VRShooter.UI
 
             scoreText.text = score.ToString();
             isCoroutineRunning = false;
-        }
-
-        private void OnDisable()
-        {
-            EventBroker.OnEnemyDestroyed -= AddScore;
         }
     }
 }
