@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamagable
@@ -11,7 +9,6 @@ public class Player : MonoBehaviour, IDamagable
     private int health = 100;
 
     private Action<int> onDamageTaken;
-
 
     public Action OnAttacked;
 
@@ -38,6 +35,6 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Die()
     {
-        EventBroker.callOnGameOver();
+        EventBroker.CallOnGameOver();
     }
 }
