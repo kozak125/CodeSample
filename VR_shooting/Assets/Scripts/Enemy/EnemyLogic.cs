@@ -65,11 +65,10 @@ public class EnemyLogic
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            IDamagable player = other.GetComponent<Player>();
-            Attack(player);
-        }
+		if (other.TryGetComponent(out IDamagable damagable))
+		{
+            Attack(damagable);
+		}
     }
 
     private void Attack(IDamagable objectToAttack)
