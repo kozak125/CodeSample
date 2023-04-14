@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -12,6 +11,7 @@ public class SingleEnemyScoreTracker : MonoBehaviour
     private int enemyScore;
     private bool isShowingScore = false;
     private float showScoreTimer;
+
     private void Start()
     {
         singleEnemyScoreText = GetComponent<TMP_Text>();
