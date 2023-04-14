@@ -1398,6 +1398,7 @@ MonoBehaviour:
   enemiesToSpawn:
   - {fileID: 3973807350125554817, guid: 75ea87bf182fa9847b77679ffb8897f5, type: 3}
   enemiesParent: {fileID: 1160806385}
+  playerTransform: {fileID: 462689529}
 --- !u!4 &1168151501
 Transform:
   m_ObjectHideFlags: 0

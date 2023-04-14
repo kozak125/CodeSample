@@ -7,17 +7,17 @@ namespace VRShooter
     {
         [SerializeField]
         private List<GameObject> enemiesToSpawn;
+		[SerializeField]
+		private Transform enemiesParent;
         [SerializeField]
-        private Transform enemiesParent;
+		private Transform playerTransform;
 
-        private Transform playerTransform;
-        private List<GameObject> pooledEnemies = new List<GameObject>();
+		private List<GameObject> pooledEnemies = new List<GameObject>();
 
         private const float TIME_BETWEEN_SPAWN = 3f;
 
         private void Start()
         {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             EventBroker.OnGameOver += GameOver;
 
             InvokeRepeating(nameof(SpawnEnemy), 0f, TIME_BETWEEN_SPAWN);
