@@ -11,7 +11,6 @@ namespace VRShooter
         private Transform enemiesParent;
 
         private Transform playerTransform;
-        private float timer = 0f;
         private List<GameObject> pooledEnemies = new List<GameObject>();
 
         private const float TIME_BETWEEN_SPAWN = 3f;
@@ -20,21 +19,13 @@ namespace VRShooter
         {
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             EventBroker.OnGameOver += GameOver;
+
+            InvokeRepeating(nameof(SpawnEnemy), 0f, TIME_BETWEEN_SPAWN);
         }
 
         private void GameOver()
         {
             enabled = false;
-        }
-
-        private void Update()
-        {
-            timer += Time.deltaTime;
-            if (timer > TIME_BETWEEN_SPAWN)
-            {
-                SpawnEnemy();
-                timer = 0f;
-            }
         }
 
         private void SpawnEnemy()
