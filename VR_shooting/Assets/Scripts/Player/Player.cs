@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour, IDamagable
 {
     [SerializeField]
-    private HealthBar healthBar;
+    private PlayerHealthBar healthBar;
     [SerializeField]
     private int health = 100;
 
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, IDamagable
     public void GetDamaged(int damageAmout)
     {
         health -= damageAmout;
-        EventBroker.CallOnDamageTaken(damageAmout);
+        healthBar.SubstractHealth(damageAmout);
 
         CheckForDeath();
     }

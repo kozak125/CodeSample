@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class PlayerHealthBar : MonoBehaviour
 {
     [SerializeField]
     private Slider damageBar;
@@ -20,11 +20,10 @@ public class HealthBar : MonoBehaviour
         healthBar.value = healthBar.maxValue = maxHealth;
         damageBar.value = damageBar.maxValue = maxHealth;
         
-        EventBroker.OnDamageTaken += SubstractHealth;
         EventBroker.OnGameOver += GameOver;
     }
 
-    private void SubstractHealth(int amount)
+    public void SubstractHealth(int amount)
     {
         healthBar.value -= amount;
         if (!isCoroutineRunning)
@@ -55,6 +54,5 @@ public class HealthBar : MonoBehaviour
     private void OnDestroy()
     {
         EventBroker.OnGameOver -= GameOver;
-        EventBroker.OnDamageTaken -= SubstractHealth;
     }
 }
