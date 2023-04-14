@@ -14,13 +14,13 @@ public class HealthBar : MonoBehaviour
     private int damageSubstractionSmoothing = 1;
     private bool isCoroutineRunning = false;
     
-    public void Setup(int maxHealth, ref Action<int> onDamageTaken)
+    public void Setup(int maxHealth)
     {
         healthBar = GetComponent<Slider>();
         healthBar.value = healthBar.maxValue = maxHealth;
         damageBar.value = damageBar.maxValue = maxHealth;
         
-        onDamageTaken += SubstractHealth;
+        EventBroker.OnDamageTaken += SubstractHealth;
         EventBroker.OnGameOver += GameOver;
     }
 
@@ -55,5 +55,6 @@ public class HealthBar : MonoBehaviour
     private void OnDestroy()
     {
         EventBroker.OnGameOver -= GameOver;
+        EventBroker.OnDamageTaken -= SubstractHealth;
     }
 }

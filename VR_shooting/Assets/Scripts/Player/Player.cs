@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamagable
 {
-    private event Action<int> onDamageTaken;
-
     [SerializeField]
     private HealthBar healthBar;
     [SerializeField]
@@ -12,13 +10,13 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Start()
     {
-        healthBar.Setup(health, ref onDamageTaken);
+        healthBar.Setup(health);
     }
 
     public void GetDamaged(int damageAmout)
     {
         health -= damageAmout;
-        onDamageTaken?.Invoke(damageAmout);
+        EventBroker.CallOnDamageTaken(damageAmout);
 
         CheckForDeath();
     }
