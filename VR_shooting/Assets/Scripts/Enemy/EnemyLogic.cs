@@ -8,14 +8,15 @@ namespace VRShooter.Enemies
         public event Action OnDie;
         public event Action<IDamagable> OnAttacking;
 
-        private EnemyMovementPatterns enemyMovements;
-        private EnemyMovementPatterns.MovementStrategy noMovementStrategy;
-        private Transform enemyTransform;
         private Vector3 playerPosition;
         private int currentHealth;
-        private int maxHealth;
         private EnemyMovementPatterns.MovementStrategy moveEnemy;
         private bool isAttacking = false;
+
+        private readonly EnemyMovementPatterns enemyMovements;
+        private readonly EnemyMovementPatterns.MovementStrategy noMovementStrategy;
+        private readonly Transform enemyTransform;
+        private readonly int maxHealth;
 
         public EnemyLogic(EnemyMovementPatterns _enemyMovements, EnemyNullMovementStrategy _noMovement, Transform _enemyTransform, Vector3 _playerPosition, int _health)
         {
