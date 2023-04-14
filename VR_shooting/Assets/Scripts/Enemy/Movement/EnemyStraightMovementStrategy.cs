@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VRShooter.Enemy
+namespace VRShooter.Enemies
 {
     public class EnemyStraightMovementStrategy : EnemyBaseMovementStrategy
     {

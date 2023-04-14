@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VRShooter.Enemy
+namespace VRShooter.Enemies
 {
     public sealed class EnemyNullMovementStrategy : EnemyBaseMovementStrategy
     {

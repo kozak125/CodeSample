@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VRShooter.Enemy
+namespace VRShooter.Enemies
 {
     [CreateAssetMenu(menuName = "New Enemy Movement Patterns")]
     public class EnemyMovementPatterns : ScriptableObject

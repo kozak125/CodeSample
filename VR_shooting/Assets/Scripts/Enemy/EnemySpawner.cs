@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using VRShooter.Enemies;
 
 namespace VRShooter
 {
@@ -52,6 +53,7 @@ namespace VRShooter
         private GameObject CreateNewEnemy()
         {
             var newEnemy = Instantiate(enemiesToSpawn[0], enemiesParent);
+            newEnemy.GetComponent<Enemy>().Setup(playerTransform);
             pooledEnemies.Add(newEnemy);
             return newEnemy;
         }

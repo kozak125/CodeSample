@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace VRShooter.Enemy
+namespace VRShooter.Enemies
 {
     public class EnemyLogic
     {

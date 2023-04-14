@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace VRShooter.Enemy
+namespace VRShooter.Enemies
 {
     public class Enemy : MonoBehaviour
     {
@@ -19,12 +19,11 @@ namespace VRShooter.Enemy
         private int pointsForKilling = 10;
         [SerializeField]
         private int damageFromGun = 10;
-        private Transform playerTransform;
+
         private EnemyLogic logic;
 
-        private void Start()
+        public void Setup(Transform playerTransform)
         {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             logic = new EnemyLogic(enemyMovements, noMovementStrategy, transform, playerTransform.position, health);
             logic.OnAttacking += Attack;
             logic.OnDie += Die;
