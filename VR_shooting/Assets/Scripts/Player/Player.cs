@@ -1,31 +1,30 @@
 ﻿using UnityEngine;
-using VRShooter.Player.UI;
 
 namespace VRShooter.Player
 {
     public class Player : MonoBehaviour, IDamagable
     {
         [SerializeField]
-        private PlayerHealthBar healthBar;
-        [SerializeField]
-        private int health = 100;
+        private FloatValue maxHealth;
 
-        private void Start()
-        {
-            healthBar.Setup(health);
-        }
+        private float currentHealth;
 
-        public void GetDamaged(int damageAmout)
+		public void Start()
+		{
+            currentHealth = maxHealth.Value;
+		}
+
+		public void OnDamageReceived(float damageAmout)
         {
-            health -= damageAmout;
-            healthBar.SubstractHealth(damageAmout);
+            currentHealth -= damageAmout;
+            EventBroker.CallOnDamageReceived(damageAmout);
 
             CheckForDeath();
         }
 
         private void CheckForDeath()
         {
-            if (health <= 0)
+            if (currentHealth <= 0f)
             {
                 Die();
             }

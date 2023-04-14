@@ -680,8 +680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df52bf80681cf845b31e89f3e197277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 618586858}
-  health: 100
+  maxHealth: {fileID: 11400000, guid: cab2e75baa0bc5f4da0d5f839ea3e574, type: 2}
 --- !u!1 &484975655
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageBar: {fileID: 2006371962}
+  maxPlayerHealth: {fileID: 11400000, guid: cab2e75baa0bc5f4da0d5f839ea3e574, type: 2}
 --- !u!114 &618586859
 MonoBehaviour:
   m_ObjectHideFlags: 0

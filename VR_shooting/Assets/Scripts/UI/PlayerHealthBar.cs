@@ -2,12 +2,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace VRShooter.Player.UI
+namespace VRShooter.UI
 {
     public class PlayerHealthBar : MonoBehaviour
     {
         [SerializeField]
         private Slider damageBar;
+        [SerializeField]
+        private FloatValue maxPlayerHealth;
 
         private Slider healthBar;
         private bool isCoroutineRunning = false;
@@ -16,16 +18,17 @@ namespace VRShooter.Player.UI
         private readonly WaitForSeconds damageSubstractionSpeed = new WaitForSeconds(0.1f);
         private const int DAMAGE_SUBSTRACTION_SMOOTHING = 1;
 
-        public void Setup(int maxHealth)
+        public void Start()
         {
             healthBar = GetComponent<Slider>();
-            healthBar.value = healthBar.maxValue = maxHealth;
-            damageBar.value = damageBar.maxValue = maxHealth;
+            healthBar.value = healthBar.maxValue = maxPlayerHealth.Value;
+            damageBar.value = damageBar.maxValue = maxPlayerHealth.Value;
 
             EventBroker.OnGameOver += GameOver;
+            EventBroker.OnDamageReceived += SubstractHealth;
         }
 
-        public void SubstractHealth(int amount)
+        public void SubstractHealth(float amount)
         {
             healthBar.value -= amount;
             if (!isCoroutineRunning)
@@ -56,6 +59,7 @@ namespace VRShooter.Player.UI
         private void OnDestroy()
         {
             EventBroker.OnGameOver -= GameOver;
+            EventBroker.OnDamageReceived -= SubstractHealth;
         }
     }
 }

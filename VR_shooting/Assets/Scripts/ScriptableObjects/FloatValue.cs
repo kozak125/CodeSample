@@ -5,9 +5,7 @@ namespace VRShooter
     [CreateAssetMenu(menuName = "Float Value")]
     public class FloatValue : ScriptableObject
     {
-        [SerializeField]
-        private float value;
-
-        public float Value => value;
+        [field: SerializeField]
+        public float Value { get; set; }
     }
 }

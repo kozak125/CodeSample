@@ -6,6 +6,7 @@ namespace VRShooter
     {
         public static event Action<int> OnEnemyDestroyed;
         public static event Action OnGameOver;
+        public static event Action<float> OnDamageReceived;
 
         public static void CallOnEnemyDestroyed(int pointValue)
         {
@@ -16,5 +17,10 @@ namespace VRShooter
         {
             OnGameOver?.Invoke();
         }
+
+        public static void CallOnDamageReceived(float damageAmount)
+		{
+            OnDamageReceived?.Invoke(damageAmount);
+		}
     }
 }
