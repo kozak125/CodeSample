@@ -9,7 +9,7 @@ namespace VRShooter.Player
 
         private float currentHealth;
 
-		public void OnDamageReceived(float damageAmout)
+        public void OnDamageReceived(float damageAmout)
         {
             currentHealth -= damageAmout;
             EventBroker.CallOnDamageReceived(damageAmout);
@@ -17,10 +17,10 @@ namespace VRShooter.Player
             CheckForDeath();
         }
 
-		private void Start()
-		{
+        private void Start()
+        {
             currentHealth = maxHealth.Value;
-		}
+        }
 
         private void CheckForDeath()
         {

@@ -8,12 +8,12 @@ namespace VRShooter
     {
         [SerializeField]
         private List<GameObject> enemiesToSpawn;
-		[SerializeField]
-		private Transform enemiesParent;
         [SerializeField]
-		private Transform playerTransform;
+        private Transform enemiesParent;
+        [SerializeField]
+        private Transform playerTransform;
 
-		private List<GameObject> pooledEnemies = new List<GameObject>();
+        private List<GameObject> pooledEnemies = new List<GameObject>();
 
         private const float TIME_BETWEEN_SPAWN = 3f;
 
