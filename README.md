@@ -1,7 +1,8 @@
 # Code Sample
-A VR shooter (uses an obsolete google VR plugin)
+Some code samples from my recent project
+An old VR shooter game (uses an obsolete google VR plugin)
 
-A couple things to note:
+A couple things to note about the VR game:
 1. I didn't make proper weapons. Enemies still take damage and can be killed, however there is no visual
 representation. I made only 1 type of enemy with 1 type of movement. That enemy has 50 health and takes 10 damage from shots,
 so it takes 5 shots to kill each enemy.
